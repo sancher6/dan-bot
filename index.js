@@ -12,7 +12,7 @@ bot.on('start', () => {
         icon_emoji: ':dan:'
     };
 
-    bot.postMessageToChannel('general', 'Get ready to get FISTED',params);
+    console.log('Dan bot is ready');
 });
 
 //error handler
@@ -24,20 +24,18 @@ bot.on('message', (data) => {
         return; 
     }
     else{
-        handleMessage(data.text);
+        // console.log(data);
+        handleMessage(data.text, data.user, data.channel);
     }
 });
 
 //response to data
-function handleMessage(message){
-    if(message.includes(' advice')){
-        advice(); 
+function handleMessage(message, user, channel){
+    if(message.toLowerCase().includes(' advice')){
+        advice(user, channel); 
     }
-    else if(message.includes(' yo momma')){
+    else if(message.toLowerCase().includes(' yo momma')){
         yoMamaJoke(); 
-    }
-    else if(message.includes(' ?')){
-        yesNo(); 
     }
     else{
         return; 
@@ -45,14 +43,14 @@ function handleMessage(message){
 }
 
 //give advice
-function advice(){
+function advice(user, channel){
     axios.get('http://api.adviceslip.com/advice').then(res => {
         const ad = res.data.slip.advice;
         const params = {
             icon_emoji: ':dan:'
         };
-        // console.log(ad);
-        bot.postMessageToChannel('general', `hey dumbfuck, ${ad}`, params);
+        // ch = bot.getChannel(channel); 
+        bot.postMessageToChannel('general', `hey <@${user}>, ${ad}`, params);
     });
 }
 
@@ -65,16 +63,5 @@ function yoMamaJoke() {
         };
         // console.log(ad);
         bot.postMessageToChannel('general', joke, params);
-    });
-}
-//give yes no response
-function yesNo(){
-    axios.get('https://yesno.wtf/api/').then(res => {
-        const y = res.data.answer
-        const params = {
-            icon_emoji: ':dan:'
-        };
-        console.log(y);
-        // bot.postMessageToChannel('general', y, params);
     });
 }
