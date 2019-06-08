@@ -1,2 +1,4 @@
 # dan-bot
-Funny bot that sends yo momma jokes and advice from api's 
+Richard Bustamante
+## Description: 
+Bot created for Slack to send yo momma jokes on command by pulling jokes from an API
